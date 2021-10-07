@@ -1,5 +1,7 @@
 import numpy as np
 import Variables as var
+import pandas as pd
+from openpyxl import Workbook, load_workbook
 
 
 # Функция вывода Римских чисел
@@ -8,22 +10,20 @@ def checkio(data):
     tens = ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"]
     hunds = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"]
     thous = ["", "M", "MM", "MMM", "MMMM"]
-
     t = thous[data // 1000]
     h = hunds[data // 100 % 10]
     te = tens[data // 10 % 10]
     o = ones[data % 10]
-
     return t + h + te + o
 
 
-# Функция для создания нулей плод главной диаглналью
+# Функция для создания нулей плод главной диагональю
 def makeTrianglMatrix(matrix):
     for row in matrix:
         row /= row[0]
     for row in matrix[1:]:
         row -= matrix[0]
-
+    print(matrix[0])
     if matrix.shape[0] > 1:
         makeTrianglMatrix(matrix[1:, 1:])
     return matrix
@@ -66,10 +66,9 @@ def main():
         matrix_sum = np.append(matrix_sum, [np.sum(row)])
     matrix_with_sum_elements = np.column_stack([matrix_with_free_elements, matrix_sum])
 
-    # Округление матрицы
-    matrix_with_sum_elements = np.around(makeTrianglMatrix(matrix_with_sum_elements), decimals=5)
+    print("Matrix A with sum elements--------------\n", matrix_with_sum_elements, "\n")
 
-    print("Matrix A with sum elements\n", matrix_with_sum_elements, "\n\n\n")
+    matrix_with_sum_elements = np.around(makeTrianglMatrix(matrix_with_sum_elements), decimals=5)
 
     matrix_with_sum_elements = methodGauss(matrix_with_sum_elements)
 
