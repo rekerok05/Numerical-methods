@@ -1,7 +1,5 @@
 import numpy as np
 import Variables as var
-import pandas as pd
-from openpyxl import Workbook, load_workbook
 
 
 # Функция вывода Римских чисел
@@ -23,7 +21,6 @@ def makeTrianglMatrix(matrix):
         row /= row[0]
     for row in matrix[1:]:
         row -= matrix[0]
-    print(matrix[0])
     if matrix.shape[0] > 1:
         makeTrianglMatrix(matrix[1:, 1:])
     return matrix
@@ -47,33 +44,22 @@ def methodGauss(matrix):
                     len(row) - 2], decimals=5)
                 row[j] = 0
         row[-1] = np.sum(row[:-1])
-        print("----------------\n%s\n" % (checkio(i + 1)), localMatrix, "\n----------------")
 
     return np.flip(localMatrix, 0)
 
 
 def main():
-    print("\n\nPART 1\n\n")
-
-    print("Matrix A\n", var.A, "\n")
-
     matrix_with_free_elements = np.column_stack([var.A, var.f])
-
-    print("Matrix A with free elements\n", matrix_with_free_elements, "\n")
 
     matrix_sum = np.array([])
     for row in matrix_with_free_elements:
         matrix_sum = np.append(matrix_sum, [np.sum(row)])
     matrix_with_sum_elements = np.column_stack([matrix_with_free_elements, matrix_sum])
 
-    print("Matrix A with sum elements--------------\n", matrix_with_sum_elements, "\n")
-
     matrix_with_sum_elements = np.around(makeTrianglMatrix(matrix_with_sum_elements), decimals=5)
 
     matrix_with_sum_elements = methodGauss(matrix_with_sum_elements)
 
-    print("\nRESULT\n", matrix_with_sum_elements, "\n\n\n")
-    print(matrix_with_sum_elements[:, -2])
     return np.matrix(matrix_with_sum_elements[:, -2]).T
 
 
