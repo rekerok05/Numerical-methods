@@ -3,14 +3,15 @@ import numpy as np
 from openpyxl import Workbook
 import Variables as var
 from Lab1 import getAnswer
+from fuctions import *
 
 
-def makeExcelTable(name, A, f):
+def makeExcelTable(A, f):
     matrix = addSumToList(np.column_stack([A, f]))
     deleteXlsx("xlsx")
     wb = Workbook()
     ws = wb.active
-    ws.title = name
+    ws.title = "matrix"
     ws.append(["i", "ai1", "ai2", "ai3", "ai4", "ai5", "sum(i,6)", "sum(i)"])
 
     # ws.append([checkio(1)])
@@ -96,4 +97,5 @@ def main():
 
 
 if __name__ == "__main__":
+    part1()
     main()
