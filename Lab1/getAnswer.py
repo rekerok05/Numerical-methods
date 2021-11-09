@@ -1,5 +1,5 @@
 import numpy as np
-import Variables as var
+import VariablesLab1 as var
 
 
 # Функция вывода Римских чисел
