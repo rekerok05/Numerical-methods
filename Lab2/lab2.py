@@ -1,6 +1,5 @@
 import numpy as np
-import VariablesLab1 as var
-from Lab1 import fuctions, getAnswer
+from Lab1 import fuctions, Variables as var
 
 
 def part1():
