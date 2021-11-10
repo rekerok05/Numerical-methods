@@ -72,7 +72,7 @@ def part2():
 
 
 def part1():
-    makeExcelTable(var.A, var.f)
+    makeExcelTable("Lab1", var.A, var.f)
 
 
 def part3():
