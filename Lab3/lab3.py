@@ -91,9 +91,12 @@ def part4():
     L = getL()
     LT = np.transpose(L)
     y = gaussPivotFunc(np.column_stack([L, var.f]))[:, -1]
-    x = np.dot(y, np.linalg.inv(L))
+    x = np.dot(y, np.linalg.inv(L)).reshape(3, 1)
     r = np.dot(var.A, x) - var.f
-    print(r)
+    print(f"Вектор невязки = {r}")
+    print(f"Октаэдрическая норма = {np.sum(abs(r))}")
+    print(f"Сферическая норма = {np.sqrt(pow(np.sum(abs(r)), 2))}")
+    print(f"Кубическая норма= {max(abs(r))}")
 
 
 def main():
