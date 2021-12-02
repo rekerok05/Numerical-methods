@@ -21,12 +21,27 @@ def iterationMethod(x1, x2, x3):
         iterationMethod(newX1, newX2, newX3)
 
 
+def makeMatrixB(matrixA):
+    B = np.zeros((3, 3))
+    for i in range(0, 3):
+        for j in range(0, 3):
+            if i != j:
+                B[i, j] = -matrixA[i, j] / matrixA[i, i]
+    return B
+
+
+# x1 = (1*x2 - 0.1*x3 - 2.9)/2
+# x2 = (-0.1*x1 - 0.72*x3 - 0.7)/5
+# x3 = (1.2*x1 - 3*x2 - 9,86)/1.7
+
 def part1():
-    iterationMethod(0, 0, 0)
+    B = makeMatrixB(var.A)
+    d = np.array([var.f[i] / var.A[i, i] for i in range(0, 3)])
+    print(f"B = \n{B}\nd = \n{d}\n")
+    iterationMethod(*d)
 
 
-def main():
-    part1()
+def main():    part1()
 
 
 if __name__ == "__main__":
