@@ -2,6 +2,8 @@ import Variables as var
 from Lab1 import getAnswer
 from fuctions import *
 
+# add comment
+
 
 def makeExcelTable(name, A, f):
     matrix = addSumToList(np.column_stack([A, f]))
