@@ -24,7 +24,7 @@ def make_triangle_matrix(matrix):
     for i in matrix[1:]:
         i -= matrix[0] * i[0]
     print(matrix)
-    print(f"{np.sum(matrix[0, 1:-1])}\n")
+    print(f"{np.sum(matrix[0, 0:-1])}\n")
     if np.shape(matrix)[0] > 1:
         matrix[1:, 1:] = make_triangle_matrix(matrix[1:, 1:])
     return matrix
