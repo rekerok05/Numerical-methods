@@ -1,6 +1,5 @@
 import numpy as np
-
-import Variables as Var
+import Lab1.Variables as Var
 
 
 # Функция вывода всех матриц
@@ -60,6 +59,7 @@ def discrepancy_vector(variables: tuple):  # (A, f, solution, triangleMatrix)
 
 
 def norm_discrepancy_vector(R):
+
     print(
         f"Кубическая норма вектора невязки = {np.max(np.abs(R))}")  # Максимальный по модулу элемент вектора невзяки (знак бесконечности)
     print(
@@ -69,10 +69,13 @@ def norm_discrepancy_vector(R):
 
 
 def norm_matrix(A):
+    cub_norm = np.max(list(map(lambda x: np.sum(np.abs(x)), A)))
+    oct_norm = np.max(list(map(lambda x: np.sum(np.abs(x)), A.transpose())))
     print(
-        f"Кубическая норма матрицы A = {np.max(list(map(lambda x: np.sum(np.abs(x)), A)))}")  # Максимальная среди сумм строк
+        f"Кубическая норма матрицы = {cub_norm}")  # Максимальная среди сумм строк
     print(
-        f"Октаэдрическая норма матрицы A = {np.max(list(map(lambda x: np.sum(np.abs(x)), A.transpose())))}\n")  # Максимальная среди сумм столбцов
+        f"Октаэдрическая норма матрицы = {oct_norm}\n")  # Максимальная среди сумм столбцов
+    return cub_norm, oct_norm
 
 
 def detA(A):
