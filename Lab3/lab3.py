@@ -2,6 +2,7 @@ import math
 import numpy as np
 import numpy.linalg
 import Variables as Var
+from Lab1.lab1 import *
 
 
 def is_symmetric(matrix):
@@ -35,6 +36,22 @@ def getL(A):
     return L
 
 
+def find_solution_y(L, f):
+    solution = np.array([0] * len(L), float)
+    solution[0] = f[0] / L[0, 0]
+    solution[1] = (f[1] - L[1, 0] * solution[0]) / L[1, 1]
+    solution[2] = (f[2] - L[2, 1] * solution[1] - L[2, 0] * solution[0]) / L[2, 2]
+    return solution
+
+
+def find_solution_x(L, f):
+    solution = np.array([0] * len(L), float)
+    solution[2] = f[2] / L[2, 2]
+    solution[1] = (f[1] - L[1, 2] * solution[2]) / L[1, 1]
+    solution[0] = (f[0] - L[0, 2] * solution[2] - L[0, 1] * solution[1]) / L[0, 0]
+    return solution
+
+
 def main():
     is_symmetric(Var.A)
     is_positive(Var.A)
@@ -47,9 +64,14 @@ def main():
     print(f"Проверка L * L^T = A: \n{LLT}\n")
 
     # обратный метод гаусса
+    y = find_solution_y(L, Var.f)
+    print(f"Y = {y}\n")
+    x = find_solution_x(LT, y)
+    print(f"X = {x}\n")
 
     # вычислить веторы невязки (нормы)
-
+    R = discrepancy_vector((Var.A, Var.f, x))
+    norm_discrepancy_vector(R)
 
 if __name__ == "__main__":
     main()
