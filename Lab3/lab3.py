@@ -2,7 +2,7 @@ import math
 import numpy as np
 import numpy.linalg
 import Variables as Var
-from Lab1.lab1 import *
+from Lab1.lab1 import discrepancy_vector, norm_discrepancy_vector
 
 
 def is_symmetric(matrix):
