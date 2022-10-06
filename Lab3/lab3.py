@@ -73,5 +73,6 @@ def main():
     R = discrepancy_vector((Var.A, Var.f, x))
     norm_discrepancy_vector(R)
 
+
 if __name__ == "__main__":
     main()
