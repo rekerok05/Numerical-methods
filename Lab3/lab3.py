@@ -52,6 +52,14 @@ def find_solution_x(L, f):
     return solution
 
 
+def method_Kramera(matrix, f):
+    detA = np.linalg.det(matrix)
+    x1 = np.linalg.det(Var.x1) / detA
+    x2 = np.linalg.det(Var.x2) / detA
+    x3 = np.linalg.det(Var.x3) / detA
+    print(f"X методом Крамера = {x1, x2, x3}")
+
+
 def main():
     is_symmetric(Var.A)
     is_positive(Var.A)
@@ -72,6 +80,8 @@ def main():
     # Вычислить векторы невязки (нормы)
     R = lab1.discrepancy_vector((Var.A, Var.f, x))
     lab1.norm_discrepancy_vector(R)
+
+    method_Kramera(Var.A, Var.f)
 
 
 if __name__ == "__main__":
