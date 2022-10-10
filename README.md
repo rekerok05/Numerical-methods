@@ -21,9 +21,20 @@ D = \begin{bmatrix}
 1.91 & -1.82 & 1.42 & 6.55 \\
 \end{bmatrix}
 ~~
+С = \begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+\end{bmatrix}
+~~
 \overline{f} = \begin{pmatrix}
 7.53 & 6.06 & 8.05 & 8.06 \\
 \end{pmatrix}^{T}
+$$
+
+$$
+A = D+KC
 $$
 
 ## Lab2
