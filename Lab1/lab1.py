@@ -2,8 +2,8 @@ import numpy as np
 import Lab1.Variables as Var
 
 
-# Функция вывода всех матриц
-def print_variables(matrix, f):
+# Функция вывода всех изначальных
+def print_variables(matrix: np.array(), f: np.array()) -> None:
     detA = np.linalg.det(matrix)
     print(f"Матрица вырожденная detA = {detA}" if detA > 0 else f"Матрица невырожденная detA = {detA}")
     print(f"Исходная матрица\n{matrix}\n")
@@ -11,7 +11,7 @@ def print_variables(matrix, f):
     print(f"Столбец ответов\n{f}\n")
 
 
-def add_sum_colm(matrix) -> np.ndarray:
+def add_sum_colm(matrix) -> np.array:
     return np.insert(arr=matrix,
                      obj=matrix.shape[1],
                      values=np.array(list(map(lambda x: np.sum(x), matrix))),
@@ -59,7 +59,6 @@ def discrepancy_vector(variables: tuple):  # (A, f, solution, triangleMatrix)
 
 
 def norm_discrepancy_vector(R):
-
     print(
         f"Кубическая норма вектора невязки = {np.max(np.abs(R))}")  # Максимальный по модулу элемент вектора невзяки (знак бесконечности)
     print(
