@@ -1,83 +1,72 @@
 import numpy as np
 
 import Variables as var
+from Lab4.lab4 import output_matrix
 
 
-def printValue(name, value):
-    print(f"{name} = \n{value}\n")
+def main():
+    M1, M2, M3 = np.eye(4), np.eye(4), np.eye(4)
 
+    M3[2] = [-var.A[3, 0] / var.A[3, 2], - var.A[3, 1] / var.A[3, 2], 1 / var.A[3, 2], -var.A[3, 3] / var.A[3, 2]]
+    M3inv = np.linalg.inv(M3)
+    output_matrix("M3", M3)
+    output_matrix("M3inv", M3inv)
 
-def indexofabsmax(matrix):
-    maxL = max(np.abs([matrix[0, 1], matrix[0, 2], matrix[1, 2]]))
-    if maxL == 0.0:
-        return [0, 0, 0]
-    i, j = np.where(np.isclose(abs(matrix), maxL))[0]
-    return [i, j, matrix[i, j]]
+    A_1 = np.dot(np.dot(M3inv, var.A), M3)
+    output_matrix("A_1", A_1)
+
+    M2[1] = [-A_1[2, 0] / A_1[2, 1], 1 / A_1[2, 1], -A_1[2, 2] / A_1[2, 1], -A_1[2, 3] / A_1[2, 1]]
+    M2inv = np.linalg.inv(M2)
+    output_matrix("M2", M2)
+    output_matrix("M2inv", M2inv)
+
+    A_2 = np.dot(np.dot(M2inv, A_1), M2)
+    output_matrix("A_2", A_2)
+
+    M1[0] = [1 / A_2[1, 0], -A_2[1, 1] / A_2[1, 0], -A_2[1, 2] / A_2[1, 0], -A_2[1, 3] / A_2[1, 0]]
+    M1inv = np.linalg.inv(M1)
+    output_matrix("M1", M1)
+    output_matrix("M1inv", M1inv)
+
+    F = np.dot(np.dot(M1inv, A_2), M1)
+    output_matrix("A_3 or F", F)
+
+    print(f"p1 = {F[0, 0]}")
+    print(f"sum of diagonal elements of A = {np.sum(np.diagonal(var.A))}\n")
+
+    print(f"Charactestic equation :\n(-1)^4(λ^4 - {F[0, 0]}λ^3 - {F[0, 1]}λ^2 - {F[0, 2]}λ - {F[0, 3]}) = 0")
+
+    lambdas = np.roots([1, -F[0, 0], -F[0, 1], -F[0, 2], -F[0, 3]])
+
+    print(f"\nlambdas = {lambdas}")
+
+    y_1 = [pow(np.real(lambdas[0]), 3), pow(np.real(lambdas[0]), 2), np.real(lambdas[0]), 1]
+    print(f"\ny_1 = {y_1}")
+
+    y_2 = [pow(np.real(lambdas[1]), 3), pow(np.real(lambdas[1]), 2), np.real(lambdas[1]), 1]
+    print(f"\ny_2 = {y_2}")
+
+    x_1 = np.dot(M3, np.dot(M2, np.dot(M1, y_1)))
+    print(f"\nx_1 ={x_1}")
+
+    x_2 = np.dot(M3, np.dot(M2, np.dot(M1, y_2)))
+    print(f"\nx_2 ={x_2}")
+
+    Sinv = np.dot(M1inv, np.dot(M2inv, M3inv))
+    S = np.dot(M3, np.dot(M2, M1))
+
+    print("\nS^-1 * A * S * y_1 = λ_1 * y_1")
+    print(f"{np.dot(np.dot(Sinv, np.dot(var.A, S)), y_1)} = {np.dot(np.real(lambdas[0]), y_1)}")
+
+    print("\nS^-1 * A * S * y_2 = λ_2 * y_2")
+    print(f"{np.dot(np.dot(Sinv, np.dot(var.A, S)), y_2)} = {np.dot(np.real(lambdas[1]), y_2)}")
+
+    print("\nA * x_1 = λ_1 * x_1")
+    print(f"{np.dot(var.A, x_1)} = {np.dot(np.real(lambdas[0]), x_1)}")
+
+    print("\nA * x_2 = λ_2 * x_2")
+    print(f"{np.dot(var.A, x_2)} = {np.dot(np.real(lambdas[1]), x_2)}")
 
 
 if __name__ == "__main__":
-    tmpA = var.A
-    change = True
-    iteration = 0
-    tmpT = 1
-    print("ИТЕРАЦИИ\n")
-    while np.abs(indexofabsmax(tmpA)[2]) > var.eps:
-        print(f"Шаг {iteration}")
-        iteration += 1
-        i, j = indexofabsmax(tmpA)[0], indexofabsmax(tmpA)[1]
-        print(i, j)
-        fi = 0.5 * np.arctan(2 * tmpA[i, j] / (tmpA[i, i] - tmpA[j, j]))
-        T = np.eye(3)
-        T[i, i] = np.cos(fi)
-        T[i, j] = -np.sin(fi)
-        T[j, i] = np.sin(fi)
-        T[j, j] = np.cos(fi)
-        trT = np.transpose(T)
-        printValue("A", tmpA)
-        printValue("T", T)
-        printValue("trT", trT)
-        if change:
-            tmpT = np.dot(tmpT, T)
-        else:
-            tmpT = T
-            change = False
-        printValue("T*trT", tmpT)
-        tmpVar = np.dot(trT, tmpA)
-        tmpA = np.around(np.dot(tmpVar, T), decimals=7)
-        printValue("tmpA", tmpA)
-
-    print("-------------------------------------")
-    printValue("lastA", tmpA)
-    printValue("lastT", T)
-    print("-------------------------------------")
-    lambda1 = tmpA[0, 0]
-    lambda2 = tmpA[1, 1]
-    lambda3 = tmpA[2, 2]
-    print("НАХОДИМ СОБСТВЕННЫЕ ЗНАЧЕНИЯ МАТРИЦЫ A\n")
-    printValue("lambda1", lambda1)
-    printValue("lambda2", lambda2)
-    printValue("lambda3", lambda3)
-    print("-------------------------------------")
-    y1 = tmpT[:, 0]
-    y2 = tmpT[:, 1]
-    y3 = tmpT[:, 2]
-    print("НАХОДИМ СОБСТВЕННЫЕ ВЕКТОРЫ МАТРИЦЫ A\n")
-    printValue("y1", y1)
-    printValue("y2", y2)
-    printValue("y3", y3)
-    print("-------------------------------------")
-    print("НОРМИРОВАНИЕ ВЕКТОРОВ В КУБИЧЕСКОЙ НОРМЕ\n")
-    x1 = y1 / np.max(np.abs(tmpT[:, 0]))
-    x2 = y2 / np.max(np.abs(tmpT[:, 1]))
-    x3 = y3 / np.max(np.abs(tmpT[:, 2]))
-    printValue("x1", x1)
-    printValue("x2", x2)
-    printValue("x3", x3)
-    print("-------------------------------------")
-    print("ПРОВЕРКА")
-    print(f"A*x1 = {np.dot(var.A, x1)}")
-    print(f"lambda1*x1 = {np.dot(lambda1, x1)}\n")
-    print(f"A*x2 = {np.dot(var.A, x2)}")
-    print(f"lambda2*x2 = {np.dot(lambda2, x2)}\n")
-    print(f"A*x3 = {np.dot(var.A, x3)}")
-    print(f"lambda3*x3 = {np.dot(lambda3, x3)}\n")
+    main()
