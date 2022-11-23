@@ -5,6 +5,7 @@ from Lab4.lab4 import output_matrix
 
 
 def main():
+    output_matrix("A", var.A)
     M1, M2, M3 = np.eye(4), np.eye(4), np.eye(4)
 
     M3[2] = [-var.A[3, 0] / var.A[3, 2], - var.A[3, 1] / var.A[3, 2], 1 / var.A[3, 2], -var.A[3, 3] / var.A[3, 2]]
@@ -47,9 +48,13 @@ def main():
     print(f"\ny_2 = {y_2}")
 
     x_1 = np.dot(M3, np.dot(M2, np.dot(M1, y_1)))
+    print(f"\n\n{np.dot(M1, y_1)}")
+    print(f"\n{np.dot(M2, np.dot(M1, y_1))}")
     print(f"\nx_1 ={x_1}")
 
     x_2 = np.dot(M3, np.dot(M2, np.dot(M1, y_2)))
+    print(f"\n\n{np.dot(M1, y_2)}")
+    print(f"\n{np.dot(M2, np.dot(M1, y_2))}")
     print(f"\nx_2 ={x_2}")
 
     Sinv = np.dot(M1inv, np.dot(M2inv, M3inv))
