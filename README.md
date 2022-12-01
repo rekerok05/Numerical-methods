@@ -103,3 +103,21 @@ A = \begin{bmatrix}
 0.5 & 1.2 & 1.5 & 1 \\
 \end{bmatrix}
 $$
+
+
+## Lab7
+
+Методом вращений найти с точностью $ε = 0.5 * 10^{-4}$ собственные значения и собственные векторы матрицы A
+
+1) Вывести матрицы $\left\\{ A_{k } \right\\}$. Проверить $\lambda_{1} + \lambda_{2} + \lambda_{3} = S_{p}A$
+2) $T = \prod_{k=1}^{n}T_{ij}^{(k)}(\phi)$
+3) Вычислить $\overline{x}^{(k)} = \frac{\overline{y}^{(k)}}{\left\| \overline{y}^{(k)} \right\|_{\infty}}$ $k = 1,2,3$
+4) Проверить $A\overline{x}^{(i)} = λ_{i}\overline{x}^{(i)}$
+
+$$
+A = \begin{bmatrix}
+2.1 & 1 & 1.1 \\
+1 & 2.6 & 1.1 \\
+1.1 & 1.1 & 3.1 \\
+\end{bmatrix}
+$$
