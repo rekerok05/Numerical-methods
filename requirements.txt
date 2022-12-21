@@ -2,3 +2,6 @@ et-xmlfile==1.1.0
 numpy==1.23.3
 openpyxl==3.0.10
 scipy==1.9.1
+
+variables~=0.0.1
+matplotlib~=3.6.2
