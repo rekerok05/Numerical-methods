@@ -9,7 +9,7 @@ def fi(x):
 
 
 def fi2(x):
-    c = -1/
+    c = -1
 
 
 def f(x):
